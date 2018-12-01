@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="/static/plugin/layui/layui.js"></script>
+    <link rel="stylesheet" href="/static/plugin/layui/css/layui.css">
+
+    <title>后台管理系统</title>
+</head>
+<body style="background:#1E9FFF">
+    <div style="position:absolute;left:50%;top:50%;margin-left: -250px;margin-top:-200px;width:500px">
+        <div style="background:#fff;border-radius:4px;padding:20px 20px 20px 20px;box-shadow: 5px 5px 20px #444444;">
+            <form class="layui-form" action="">
+                <div class="layui-form-item" style="color: grey">
+                    <h2>后台管理系统</h2>
+                </div>
+                <hr></hr>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+                            class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+                            class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input">
+                    </div>
+                    <img src="#" alt="">
+                </div>
+                <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn">登录</button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    });
+</script>
+
+</html>
