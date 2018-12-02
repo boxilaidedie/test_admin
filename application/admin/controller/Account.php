@@ -6,14 +6,16 @@ use think\Request;
 class Account extends Controller{
     //渲染登录页面
     public function login(){
-        $db = new Sysdb;
-        $map[] = ['id','=','1'];
-        //$rs= $db->table('admin')->field('id,add_time,username,password')->where($map)->item();
-        //dump( $rs);
-        return view('login');
+        if(session('admin')){
+            return redirect('/admin/home');
+        }else{
+            return view('login');
+        }
+       
     }
     //验证密码用户名提交后处理逻辑
     public function dologin(){
+
         $username =input('post.username');
         $pwd = trim(input('post.pwd'));
         $verifycode = trim(input('verifycode'));
