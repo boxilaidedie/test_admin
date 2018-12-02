@@ -11,9 +11,12 @@
 
 
 
+Route::get('', 'admin/Account/login');
 Route::get('admin', 'admin/Account/login');
 Route::post('admin/dologin', 'admin/Account/dologin');
 Route::get('admin/home', 'admin/Home/index');
+
+Route::get('admin/admins', 'admin/admins/index');
 return [
 
 ];

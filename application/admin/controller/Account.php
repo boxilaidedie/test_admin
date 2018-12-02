@@ -11,11 +11,9 @@ class Account extends Controller{
         }else{
             return view('login');
         }
-       
     }
     //验证密码用户名提交后处理逻辑
     public function dologin(){
-
         $username =input('post.username');
         $pwd = trim(input('post.pwd'));
         $verifycode = trim(input('verifycode'));

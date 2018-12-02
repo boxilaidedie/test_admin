@@ -5,10 +5,15 @@ use Util\data\Sysdb;
 use think\Request;
 class Home extends Controller{
     public function index(){
-        $admin = session('admin')?session('admin'):false;
-        $username = $admin['username'];
-        $this->assign('username', $username);
-        return view('home');
+        
+        if(session('admin')){
+           $admin = session('admin');
+            $username = $admin['username'];
+            $this->assign('username', $username);
+            return view('home');
+        }else{
+            return redirect('/admin');
+        }
     }
     public function welcome(){
         return view('welcome');
