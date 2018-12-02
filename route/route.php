@@ -9,10 +9,11 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('', 'index/Index/index');
+
 
 Route::get('admin', 'admin/Account/login');
-
+Route::post('admin/dologin', 'admin/Account/dologin');
+Route::get('admin/home', 'admin/Home/index');
 return [
 
 ];

@@ -99,7 +99,7 @@ return [
     // 是否强制使用路由
     'url_route_must'         => false,
     // 合并路由规则
-    'route_rule_merge'       => false,
+    'route_rule_merge'       => true,
     // 路由是否完全匹配
     'route_complete_match'   => true,
     // 使用注解路由
@@ -143,8 +143,11 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
-    'tpl_replace_string' => [
-        '__STATIC__' =>'/public/static/',
-    ],
+     // +----------------------------------------------------------------------
+    // | captcha验证码模块设置
+    // +----------------------------------------------------------------------
+
+    'captcha' => [
+    ]
 
 ];
