@@ -2,7 +2,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use Util\data\Sysdb;
-use think\Request;
+use think\Db;
 class Account extends Controller{
     //渲染登录页面
     public function login(){
@@ -16,7 +16,7 @@ class Account extends Controller{
     public function dologin(){
         $username =input('post.username');
         $pwd = trim(input('post.pwd'));
-        $verifycode = trim(input('verifycode'));
+        $verifycode = trim(input('post.verifycode'));
         if($username == ''){
             $msg = array('code'=>1,'msg'=>'用户名不能为空');
             return json($msg);
@@ -38,6 +38,7 @@ class Account extends Controller{
         $this->db = new Sysdb;
         $map[]=['username','=',$username];
         $admin = $this->db->table('admin')->where($map)->item();
+        // $admin =  Db::table('admin')->where($map)->find();
         if(!$admin){
             exit(json_encode(array('code'=>1,'msg'=>'用户名不存在')));
         }
@@ -47,7 +48,7 @@ class Account extends Controller{
         if($admin['status'] == 1){
             exit(json_encode(array('code'=>1,'msg'=>'用户已被禁用')));
         }
-        //设置用户session
+       // 设置用户session
         session('admin',$admin);
         exit(json_encode(array('code'=>0,'msg'=>'登录成功')));
     }

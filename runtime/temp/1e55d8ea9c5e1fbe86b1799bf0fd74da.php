@@ -1,3 +1,4 @@
+<?php /*a:1:{s:72:"D:\wwwroot\thinkphp.test\think\application\admin\view\account\login.html";i:1543822096;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +41,7 @@
                     <div class="layui-input-inline">
                         <input type="text" class="layui-input" id="verifycode">
                     </div>
-                   <img src="{:captcha_src()}" style="width:150px;height:35px;cursor:pointer;" id="verify_img" onclick="refreshVerify()">
+                   <img src="<?php echo captcha_src(); ?>" style="width:150px;height:35px;cursor:pointer;" id="verify_img" onclick="refreshVerify()">
                    <a href="javascript:refreshVerify()">点击刷新</a>
                 <div class="layui-form-item">
                     <div class="layui-input-block">

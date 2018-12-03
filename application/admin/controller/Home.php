@@ -3,14 +3,14 @@ namespace app\admin\controller;
 use think\Controller;
 use Util\data\Sysdb;
 use think\Request;
+
 class Home extends Controller{
     public function index(){
-        
         if(session('admin')){
            $admin = session('admin');
-            $username = $admin['username'];
-            $this->assign('username', $username);
-            return view('home');
+           $username = $admin['username'];
+           $this->assign('username', $username);
+           return view('home');
         }else{
             return redirect('/admin');
         }
