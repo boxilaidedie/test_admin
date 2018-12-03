@@ -1,4 +1,4 @@
-<?php /*a:1:{s:72:"D:\wwwroot\thinkphp.test\think\application\admin\view\admins\admins.html";i:1543829531;}*/ ?>
+<?php /*a:1:{s:72:"D:\wwwroot\thinkphp.test\think\application\admin\view\admins\admins.html";i:1543831293;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,10 +31,10 @@
 <body>
   <div class="admins_main">
     <div class="layui-btn-group">
-      <button class="layui-btn layui-btn-sm" type="botton" onclick="add_admins()">
+      <button class="layui-btn layui-btn-sm" type="button" onclick="add_admins()">
         <i class="layui-icon">&#xe654;</i>
       </button>
-      <button class="layui-btn layui-btn-sm">
+      <button class="layui-btn layui-btn-sm" type="button" onclick="edit_admins()">
         <i class="layui-icon">&#xe642;</i>
       </button>
       <button class="layui-btn layui-btn-sm">
@@ -59,37 +59,33 @@
         </tr>
       </thead>
       <tbody>
+        <?php if(is_array($userInfo) || $userInfo instanceof \think\Collection || $userInfo instanceof \think\Paginator): $i = 0; $__LIST__ = $userInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
         <tr>
-          <td>贤心</td>
-          <td>2016-11-29</td>
-          <td>人生就像是一场修行</td>
-          <td>人生就像是一场修行</td>
+          <td><?php echo htmlentities($data['username']); ?></td>
+          <td><?php echo htmlentities($data['gid']); ?></td>
+          <td><?php echo htmlentities($data['truename']); ?></td>
+          <td><?php echo htmlentities($data['add_time']); ?></td>
         </tr>
-        <tr>
-          <td>许闲心</td>
-          <td>2016-11-28</td>
-          <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-          <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-        </tr>
-        <tr>
-          <td>许闲心</td>
-          <td>2016-11-28</td>
-          <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-          <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-        </tr>
+        <?php endforeach; endif; else: echo "" ;endif; ?>
       </tbody>
     </table>
   </div>
 
 </body>
-<div id="admin-panel" style="width:400px;display: none">
+<div id="admin-panel-add" style="width:400px;display: none">
   <form class="layui-form" action="" style="margin-top:20px;">
     <div class="layui-form-item">
       <label class="layui-form-label">管理员账号</label>
       <div class="layui-input-block">
-        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
       </div> 
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员姓名</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
+        </div> 
+      </div>
     
     <div class="layui-form-item">
       <label class="layui-form-label">选择框</label>
@@ -107,9 +103,9 @@
     <div class="layui-form-item">
       <label class="layui-form-label">权限</label>
       <div class="layui-input-block">
-        <input type="checkbox" name="" title="写作" lay-skin="primary" checked>
-        <input type="checkbox" name="" title="发呆" lay-skin="primary"> 
-        <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled> 
+        <input type="checkbox" name="" title="超级权限(1)" lay-skin="primary" checked>
+        <input type="checkbox" name="" title="一般权限(0)" lay-skin="primary"> 
+        <!-- <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>  -->
       </div>
     </div>
     <div class="layui-form-item">
@@ -119,7 +115,7 @@
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">单选框</label>
+      <label class="layui-form-label">性别</label>
       <div class="layui-input-block">
         <input type="radio" name="sex" value="男" title="男">
         <input type="radio" name="sex" value="女" title="女" checked>
@@ -133,6 +129,65 @@
     </div>
   </form>
 </div>
+
+
+<div id="admin-panel-edit" style="width:400px;display: none">
+    <form class="layui-form" action="" style="margin-top:20px;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">管理员账号</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
+        </div> 
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">管理员姓名</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
+          </div> 
+        </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">选择框</label>
+        <div class="layui-input-block">
+          <select name="city" lay-verify="required">
+            <option value=""></option>
+            <option value="0">北京</option>
+            <option value="1">上海</option>
+            <option value="2">广州</option>
+            <option value="3">深圳</option>
+            <option value="4">杭州</option>
+          </select>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">权限</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="" title="超级权限(1)" lay-skin="primary" checked>
+          <input type="checkbox" name="" title="一般权限(0)" lay-skin="primary"> 
+          <!-- <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>  -->
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">禁用</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="switch" lay-skin="switch">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+          <input type="radio" name="sex" value="男" title="男">
+          <input type="radio" name="sex" value="女" title="女" checked>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
 <script>
   layui.use(['layer', 'form'], function () {
     $ = layui.jquery;
@@ -149,7 +204,16 @@
       title: '添加管理员',
       type: 1,
       area: ['600px', '600px'],
-      content: $('#admin-panel') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+      content: $('#admin-panel-add') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+    });
+  }
+
+  function edit_admins(){
+    layer.open({
+      title: '管理员管理',
+      type: 1,
+      area: ['600px', '600px'],
+      content: $('#admin-panel-edit') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
     });
   }
 </script>
