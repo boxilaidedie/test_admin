@@ -1,3 +1,4 @@
+<?php /*a:1:{s:69:"D:\wwwroot\admin.test\think\application\admin\view\admins\admins.html";i:1543852116;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,17 +53,17 @@
         </tr>
       </thead>
       <tbody>
-        {volist name="userInfo" id="data"}
+        <?php if(is_array($userInfo) || $userInfo instanceof \think\Collection || $userInfo instanceof \think\Paginator): $i = 0; $__LIST__ = $userInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
         <tr>
           
-          <td>{$data.username}</td>
-          <td>{$data.gid==1?'一般用户':'超级管理员'}</td>
-          <td>{$data.status==0?'正常':'禁用'}</td>
-          <td>{$data.truename}</td>
-          <td>{$data.add_time}</td>
+          <td><?php echo htmlentities($data['username']); ?></td>
+          <td><?php echo $data['gid']==1 ? '一般用户' : '超级管理员'; ?></td>
+          <td><?php echo $data['status']==0 ? '正常' : '禁用'; ?></td>
+          <td><?php echo htmlentities($data['truename']); ?></td>
+          <td><?php echo htmlentities($data['add_time']); ?></td>
           <td><button class="layui-btn layui-btn-sm" onclick="edit_admins(this)">编辑</button><button class="layui-btn layui-btn-sm" onclick="del_admins()">删除</button></td> 
         </tr>
-        {/volist}
+        <?php endforeach; endif; else: echo "" ;endif; ?>
       </tbody>
     </table>
   </div>

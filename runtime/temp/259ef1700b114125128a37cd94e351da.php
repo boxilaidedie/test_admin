@@ -1,3 +1,4 @@
+<?php /*a:1:{s:65:"D:\wwwroot\admin.test\think\application\admin\view\home\home.html";i:1543847543;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +38,7 @@
               <a href="">个人中心<span class=" layui-badge-dot"></span></a>
             </li>
             <li class="layui-nav-item item-r"">
-              <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">{$username}</a>
+              <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img"><?php echo htmlentities($username); ?></a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;">修改信息</a></dd>
                     <dd><a href="javascript:;">安全管理</a></dd>
