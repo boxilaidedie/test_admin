@@ -1,4 +1,4 @@
-<?php /*a:1:{s:68:"D:\wwwroot\thinkphp.test\think\application\admin\view\home\home.html";i:1543827908;}*/ ?>
+<?php /*a:1:{s:68:"D:\wwwroot\thinkphp.test\think\application\admin\view\home\home.html";i:1543884450;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,14 +15,14 @@
         float: right;
         margin-right: 15px;
     }
-    .menu{
-        float: left
-    }
-    .main {
+
+    .menu {
         float: left
     }
 
- 
+    .main {
+        float: left
+    }
 </style>
 
 <body>
@@ -47,7 +47,7 @@
             </li>
         </ul>
     </div>
-    <div class="menu" >
+    <div class="menu">
         <ul class="layui-nav layui-nav-tree layui-inline" id="menu">
             <li class="layui-nav-item nav-item">
                 <a href="javascript:;">管理员管理</a>
@@ -76,7 +76,8 @@
     </div>
 
     <div class="main">
-        <iframe src="/admin/home/welcome" style="width:100%;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+        <iframe src="/admin/home/welcome" style="width:100%;" frameborder="no" border="0" marginwidth="0" marginheight="0"
+            scrolling="no" allowtransparency="yes"></iframe>
     </div>
 </body>
 <script>
@@ -85,31 +86,37 @@
         layer = layui.layer;
         set_menu_height(); //设置菜单高度
         set_main_height();//设置main高度
-        set_main_width()
+        set_main_width();
+        $(window).resize(function () {
+            set_menu_height(); //设置菜单高度
+            set_main_height();//设置main高度
+            set_main_width();
+        });
+
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
         //监听导航点击
         element.on('nav(demo)', function (elem) {
             layer.msg(elem.text());
         });
     });
-    function set_admins(){
-        $('.main iframe').attr('src','/admin/admins');
+    function set_admins() {
+        $('.main iframe').attr('src', '/admin/admins');
     }
-    
-    function set_menu_height(){
+
+    function set_menu_height() {
         var wH = $(window).height();
         console.log(wH)
         $('#menu').css('height', wH - 60);
     }
-    function set_main_height(){
+    function set_main_height() {
         var wH = $(window).height();
         $('.main iframe').css('height', wH - 60);
     }
 
-    function set_main_width(){
+    function set_main_width() {
         var wH = $(window).width();
-        var menu_W=$('#menu').width();
-        $('.main iframe').css('width', wH -  menu_W);
+        var menu_W = $('#menu').width();
+        $('.main iframe').css('width', wH - menu_W);
     }
 
 </script>

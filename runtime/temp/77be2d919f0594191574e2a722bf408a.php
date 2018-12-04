@@ -1,4 +1,4 @@
-<?php /*a:1:{s:72:"D:\wwwroot\thinkphp.test\think\application\admin\view\admins\admins.html";i:1543831967;}*/ ?>
+<?php /*a:1:{s:72:"D:\wwwroot\thinkphp.test\think\application\admin\view\admins\admins.html";i:1543890374;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,12 +34,6 @@
       <button class="layui-btn layui-btn-sm" type="button" onclick="add_admins()">
         <i class="layui-icon">&#xe654;</i>
       </button>
-      <button class="layui-btn layui-btn-sm" type="button" onclick="edit_admins()">
-        <i class="layui-icon">&#xe642;</i>
-      </button>
-      <button class="layui-btn layui-btn-sm">
-        <i class="layui-icon">&#xe640;</i>
-      </button>
     </div>
     <table class="layui-table">
       <colgroup>
@@ -49,19 +43,25 @@
       </colgroup>
       <thead>
         <tr>
+
           <th>用户名</th>
           <th>权限</th>
+          <th>状态</th>
           <th>真实姓名</th>
           <th>创建时间</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <?php if(is_array($userInfo) || $userInfo instanceof \think\Collection || $userInfo instanceof \think\Paginator): $i = 0; $__LIST__ = $userInfo;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$data): $mod = ($i % 2 );++$i;?>
         <tr>
+          
           <td><?php echo htmlentities($data['username']); ?></td>
-          <td><?php echo htmlentities($data['gid']); ?></td>
+          <td><?php echo $data['gid']==1 ? '一般用户' : '超级管理员'; ?></td>
+          <td><?php echo $data['status']==0 ? '正常' : '禁用'; ?></td>
           <td><?php echo htmlentities($data['truename']); ?></td>
           <td><?php echo htmlentities($data['add_time']); ?></td>
+          <td><button class="layui-btn layui-btn-sm" onclick="edit_admins(this)">编辑</button><button class="layui-btn layui-btn-sm" onclick="del_admins()">删除</button></td> 
         </tr>
         <?php endforeach; endif; else: echo "" ;endif; ?>
       </tbody>
@@ -74,13 +74,13 @@
     <div class="layui-form-item">
       <label class="layui-form-label">管理员账号</label>
       <div class="layui-input-block">
-        <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
+        <input type="text" name="username" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
       </div> 
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">管理员密码</label>
         <div class="layui-input-block">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员密码" autocomplete="off" class="layui-input">
+          <input type="text" name="password" required  lay-verify="required" placeholder="请输入管理员密码" autocomplete="off" class="layui-input">
         </div> 
       </div>
       <div class="layui-form-item">
@@ -93,13 +93,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">管理员姓名</label>
         <div class="layui-input-block">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员姓名" autocomplete="off" class="layui-input">
+          <input type="text" name="truename" required  lay-verify="required" placeholder="请输入管理员姓名" autocomplete="off" class="layui-input">
         </div> 
       </div>
     <div class="layui-form-item">
       <label class="layui-form-label">是否禁用</label>
       <div class="layui-input-block">
-        <input type="checkbox" name="switch" lay-skin="switch">
+        <input type="checkbox" name="status" lay-skin="switch">
       </div>
     </div>
 
@@ -116,41 +116,21 @@
 <div id="admin-panel-edit" style="width:400px;display: none">
     <form class="layui-form" action="" style="margin-top:20px;">
       <div class="layui-form-item">
-        <label class="layui-form-label">管理员账号</label>
+        <label class="layui-form-label ">是否禁用</label>
         <div class="layui-input-block">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
-        </div> 
-      </div>
-      <div class="layui-form-item">
-          <label class="layui-form-label">管理员姓名</label>
-          <div class="layui-input-block">
-            <input type="text" name="title" required  lay-verify="required" placeholder="请输入管理员账号" autocomplete="off" class="layui-input">
-          </div> 
-        </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">权限</label>
-        <div class="layui-input-block">
-          <input type="checkbox" name="" title="超级权限(1)" lay-skin="primary" checked>
-          <input type="checkbox" name="" title="一般权限(0)" lay-skin="primary"> 
-          <!-- <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>  -->
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">是否禁用</label>
-        <div class="layui-input-block">
-          <input type="checkbox" name="switch" lay-skin="switch">
+          <input type="checkbox" name="switch" lay-skin="switch" class="userInfo-status" checked=true>
         </div>
       </div>
       <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-block">
-          <input type="radio" name="sex" value="男" title="男">
-          <input type="radio" name="sex" value="女" title="女" checked>
+          <input type="radio" name="role" value="0" title="超级权限">
+          <input type="radio" name="role" value="1" title="一般权限" checked=true>
         </div>
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
-          <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+          <button class="layui-btn" lay-submit lay-filter="formDemo" id="edit_admin">立即提交</button>
           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
       </div>
@@ -161,9 +141,13 @@
     $ = layui.jquery;
     layer = layui.layer;
     var form = layui.form;
-    form.on('submit(formDemo)', function (data) {
-      layer.msg(JSON.stringify(data.field));
-      return false;
+    form.on('submit(formDemo)', function (data) {  //确定提交获取form中提交的值
+      //layer.msg(JSON.stringify(data.field));  //获取值
+      var userInfo = data.field;
+      userInfo['status'] = userInfo['status']=='on'?0:1;
+      $.post('/admin/admins/addAdmin',userInfo,function(res){
+        console.log(12312312)
+      });
     });
   });
 
@@ -176,14 +160,27 @@
     });
   }
 
-  function edit_admins(){
+  function edit_admins(obj){
+    if($($(obj).parent().prevAll()[2]).text()=='正常'){
+      $('.userInfo-status').attr('checked',false);
+      $('.userInfo-status').next().attr('class','layui-unselect layui-form-switch');
+    }else{
+      $('.userInfo-status').attr('checked',true);
+        $('.userInfo-status').next().attr('class','layui-unselect layui-form-switch layui-form-onswitch');
+
+     
+    }
     layer.open({
-      title: '管理员管理',
-      type: 1,
+      title: '编辑管理员',
+      type:1,
       area: ['600px', '600px'],
-      content: $('#admin-panel-edit') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+      content: $('#admin-panel-edit'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
     });
   }
+  
+
+
+
 </script>
 
 </html>
