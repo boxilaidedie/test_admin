@@ -11,7 +11,7 @@
 
 
 //登录页面
-Route::get('', '/admin/Account/login');
+Route::get('', '/admin');
 Route::get('/admin', 'admin/Account/login');
 //管理员界面
 Route::post('/admin/dologin', 'admin/Account/dologin');

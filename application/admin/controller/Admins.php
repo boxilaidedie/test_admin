@@ -19,12 +19,11 @@ class Admins extends Controller{
         $pwd = input('post.password');
         $role = input('post.role');
         $status = input('post.status');
-        $timestamp = time();
+        $timestamp = date('Y-m-d H:i:s',time());
         $userInfo = ['username'=>$username,'password'=>$pwd,'gid'=>$role,'status'=>$status,'add_time'=>$timestamp,'truename'=>$truename];
         $this->db = new Sysdb();
+        $result = $this->db->table('admin')->insert($userInfo);
         return $userInfo;
-        //$result = $this->db->table('admin')->insert($userInfo);
-        // $result = Db::table('admin').insert($userInfo);
         // if($result){
         //     $msg = array('code'=>0,'msg'=>'添加成功');
         //     exit( json($msg));
