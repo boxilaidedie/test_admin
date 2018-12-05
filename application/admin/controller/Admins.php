@@ -23,20 +23,30 @@ class Admins extends Controller{
         $userInfo = ['username'=>$username,'password'=>$pwd,'gid'=>$role,'status'=>$status,'add_time'=>$timestamp,'truename'=>$truename];
         $this->db = new Sysdb();
         $result = $this->db->table('admin')->insert($userInfo);
-        return $userInfo;
-        // if($result){
-        //     $msg = array('code'=>0,'msg'=>'添加成功');
-        //     exit( json($msg));
-        // }else{
-        //     $msg = array('code'=>1,'msg'=>'添加失败');
-        //     exit( json($msg));
-        // }
+        if($result){
+           $msg = array('code'=>0,'msg'=>'添加成功');
+           return json($msg);
+        }else{
+            $msg = array('code'=>1,'msg'=>'添加失败');
+            return json($msg);
+        }
         
     }
 
-    public function edit_admin(){
-        
-        $msg = array('code'=>0,'msg'=>'修改成功');
-        exit( json($msg));
+    public function editAdmin(){
+        $role = input('post.role');
+        $status = input('post.status');
+        $id = input('post.usrid');
+        $userInfo = ['gid'=>$role,'status'=>$status];
+        $this->db = new Sysdb();
+        $map[]=['id','=',$id];
+        $result = $this->db->table('admin')->where($map)->update($userInfo);
+        if($result){
+            $msg = array('code'=>0,'msg'=>'修改成功');
+            return json($msg);
+         }else{
+             $msg = array('code'=>1,'msg'=>'修改失败');
+             return json($msg);
+         }
     }
 }

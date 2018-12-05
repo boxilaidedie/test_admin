@@ -16,6 +16,7 @@ Route::get('/admin', 'admin/Account/login');
 //管理员界面
 Route::post('/admin/dologin', 'admin/Account/dologin');
 Route::post('/admin/admins/addAdmin', 'admin/admins/addAdmin');
+Route::post('/admin/admins/editAdmin', 'admin/admins/editAdmin');
 Route::get('/admin/home', 'admin/Home/index');
 Route::get('/admin/admins', 'admin/admins/index');
 

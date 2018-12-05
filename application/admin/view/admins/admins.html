@@ -70,7 +70,7 @@
 
 </body>
 <div id="admin-panel-add" style="width:400px;display: none">
-  <form class="layui-form" action="" style="margin-top:20px;">
+  <form class="layui-form" action="/admin/addAdmin" style="margin-top:20px;" method="POST">
     <div class="layui-form-item">
       <label class="layui-form-label">管理员账号</label>
       <div class="layui-input-block">
@@ -108,7 +108,7 @@
 
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        <button class="layui-btn" lay-submit lay-filter="add_user">立即提交</button>
         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
       </div>
     </div>
@@ -121,49 +121,74 @@
     <div class="layui-form-item">
       <label class="layui-form-label ">是否禁用</label>
       <div class="layui-input-block">
-        <input type="checkbox" name="switch" lay-skin="switch" class="userInfo-status" checked=true>
+        <input type="checkbox" name="status" lay-skin="switch" class="userInfo-status" checked=true>
       </div>
     </div>
     <div class="layui-form-item" style="display:none">
-        <div class="layui-input-block">
-          <input type="hidden" name="usrid" value="" class="usrid">
-        </div>
+      <div class="layui-input-block">
+        <input type="hidden" name="usrid" value="" class="usrid">
       </div>
+    </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">性别</label>
+      <label class="layui-form-label">权限</label>
       <div class="layui-input-block">
         <input type="radio" name="role" value="0" title="超级权限">
         <input type="radio" name="role" value="1" title="一般权限" checked=true>
       </div>
     </div>
-    
+
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <button class="layui-btn" lay-submit lay-filter="formDemo" id="edit_admin">立即提交</button>
+        <button class="layui-btn" lay-submit  lay-filter="edit_user" id="edit_admin">立即提交</button>
         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
       </div>
     </div>
-    
+
   </form>
 </div>
 <script>
+  var index
   layui.use(['layer', 'form'], function () {
     $ = layui.jquery;
     layer = layui.layer;
     var form = layui.form;
-    form.on('submit(formDemo)', function (data) { //确定提交获取form中提交的值
+    form.on('submit(add_user)', function (data) { //提交增加用户表单
       var userInfo = data.field;
-      alert(JSON.stringify(userInfo));
-      
-      //userInfo['status'] = userInfo['status']=='on'?0:1;
-      // $.post('/admin/admins/addAdmin',userInfo,function(res){
-      //   console.log(JSON.stringify(res))
-      // });
+      userInfo['status'] = userInfo['status'] == 'on' ? 0 : 1;
+      $.post('/admin/admins/addAdmin', userInfo, function (res) {
+        if(res.code == 1){
+          layer.msg(res.msg);
+        }else{
+          layer.close(index);
+         
+          layer.msg(res.msg);
+          setTimeout(function(){window.location.reload()},1000)
+
+        }
+      });
+      return false;   //防止表单自动提交
     });
+
+    form.on('submit(edit_user)', function (data) { //提交编辑用户表单
+      var userInfo = data.field;
+      userInfo['status'] = userInfo['status'] == 'on' ? 0 : 1;
+      // alert(JSON.stringify(userInfo));
+      $.post('/admin/admins/editAdmin',userInfo,function(res){
+        if(res.code == 1){
+          layer.msg(res.msg);
+        }else{
+          layer.close(index);
+          layer.msg(res.msg);
+          setTimeout(function(){window.location.reload()},1000)
+          
+        }
+      });
+    });
+    return false;
   });
 
   function add_admins() {
-    layer.open({
+    index = layer.open({
       title: '添加管理员',
       type: 1,
       area: ['600px', '600px'],
@@ -172,7 +197,6 @@
   }
 
   function edit_admins(obj) {
-
     if ($($(obj).parent().prevAll()[2]).text() == '正常') {
       $('.userInfo-status').attr('checked', false);
       $('.userInfo-status').next().attr('class', 'layui-unselect layui-form-switch');
@@ -180,19 +204,17 @@
     } else {
       $('.userInfo-status').attr('checked', true);
       $('.userInfo-status').next().attr('class', 'layui-unselect layui-form-switch layui-form-onswitch');
-
     }
-    layer.open({
+    index = layer.open({
       title: '编辑管理员',
       type: 1,
       area: ['600px', '600px'],
       content: $('#admin-panel-edit'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
       success: function (layero, index) {
-      var index=$(obj).parent().parent().attr('index');
-      $('.usrid').attr('value',index);
+        var index = $(obj).parent().parent().attr('index');
+        $('.usrid').attr('value', index);
       }
     });
-   
   }
 </script>
 
